@@ -2,6 +2,8 @@
 using Owin;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Autofac.Integration.WebApi;
+using webapi.AutoFac;
 using webapi.Configs;
 
 // 标识webapiOwin.Startup类为owin的启动类，也可写在AssemblyInfo.cs文件里
@@ -27,14 +29,21 @@ namespace webapi.Owin
             //});
             #endregion
 
-            var config = new HttpConfiguration();
-            config.MapHttpAttributeRoutes();//开启属性路由
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            #region 写在前面的配置
+            // 获取webapi的配置
+            var config = WebApiConfig.OwinWebApiConfiguration(new HttpConfiguration());
+            // 获取webapi的依赖注入容器
+            var container = ContainerBuilerCommon.GetWebApiContainer();
+            // 配置webapi的依赖注入
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            #endregion
+
+            #region owin组件注册（要注意顺序）
+
+            app.UseAutofacMiddleware(container);// 先注册autofac组件，需要依赖注入功能的组件在此后注册
+            app.UseAutofacWebApi(config);//注册AutofacWebApi组件后再注册WebApi组件
             app.UseWebApi(config);
+            #endregion
         }
     }
 }

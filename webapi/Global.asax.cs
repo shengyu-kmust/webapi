@@ -8,6 +8,7 @@ namespace webapi
     /// <summary>
     /// 部署在iis里时，iis的入口为HttpApplication.Application_Start函数，所以webapi要在此函数里做配置。
     /// 如果用owin通道（iis的asp.net pipeline 将不再启用），则不需要Global.asax文件
+    /// 在部署时如果是用owin技术，Global.asax不用删除，请求是不会进过这里的，除非删除了bin目录下的Microsoft.Owin.Host.SystemWeb.dll
     /// </summary>
     public class Global : System.Web.HttpApplication
     {
