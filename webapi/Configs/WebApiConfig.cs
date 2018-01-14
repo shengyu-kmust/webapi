@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using webapi.Exceptions;
 
 namespace webapi.Configs
 {
@@ -36,6 +37,7 @@ namespace webapi.Configs
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Filters.Add(new WebApiExceptionFilterAttribute());
             return config;
         }
     }

@@ -17,6 +17,8 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <ProjectView>ShowAllFiles</ProjectView>
+    <_SelectedScaffolderID>ApiControllerEmptyScaffolder</_SelectedScaffolderID>
+    <_SelectedScaffolderCategoryPath>root/Common</_SelectedScaffolderCategoryPath>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
