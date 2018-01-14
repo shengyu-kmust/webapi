@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using webapi.Exceptions;
+using webapi.Security;
 
 namespace webapi.Configs
 {
@@ -38,6 +39,7 @@ namespace webapi.Configs
                 defaults: new { id = RouteParameter.Optional }
             );
             config.Filters.Add(new WebApiExceptionFilterAttribute());
+            config.Filters.Add(new IdentityBasicAuthentication());
             return config;
         }
     }
