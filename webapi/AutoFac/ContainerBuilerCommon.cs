@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 using webapi.AutoFac.Modules;
 using webapi.example;
+using webapi.Entities;
 
 namespace webapi.AutoFac
 {
@@ -20,6 +21,7 @@ namespace webapi.AutoFac
 
             #region 注册组件，如果项目比较大可以从此方法里单独移出
             //这里写注册组件的代码
+            builder.RegisterType<DB>();
             #region 测试
             builder.RegisterType<Chinese>().As<People>();
             #endregion

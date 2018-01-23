@@ -34,10 +34,21 @@ namespace webapi.Security
             var payLoadClaims=jwtHelper.DecodeToObject(tokenHeaders.FirstOrDefault(),Config.JWTKey, out bool isValid, out string errMsg);
             if (isValid)
             {
-                var identity = new ClaimsIdentity("jwt", "userId", "roles");//只要ClaimsIdentity设置了authenticationType，authenticated就为true，后面的authority根据authenticated=true来做权限
+                var identity = new ClaimsIdentity("jwt", "user", "role");//只要ClaimsIdentity设置了authenticationType，authenticated就为true，后面的authority根据authenticated=true来做权限
                 foreach (var keyValuePair in payLoadClaims)
                 {
-                    identity.AddClaim(new Claim(keyValuePair.Key, keyValuePair.Value.ToString()));
+                    // 一个用户可以拥有多种角色 
+                    if (keyValuePair.Key=="role")
+                    {
+                        foreach (var roleItem in keyValuePair.Value.ToString().Split(','))
+                        {
+                            identity.AddClaim(new Claim("role", roleItem));
+                        }
+                    }
+                    else
+                    {
+                       identity.AddClaim(new Claim(keyValuePair.Key, keyValuePair.Value.ToString()));
+                    }
                 }
                 // 最好是http上下文的principal和进程的currentPrincipal都设置
                 context.Principal = new ClaimsPrincipal(identity);

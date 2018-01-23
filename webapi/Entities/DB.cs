@@ -14,10 +14,15 @@ namespace webapi.Entities
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<DB, webapi.Migrations.Configuration>("DBConnection"));
         }
 
+
         #region 配置所有的数据库表
 
+        public DbSet<User> Users { set; get; }
+        public DbSet<Role> Roles { set; get; }
+        public DbSet<Resource> Resources { set; get; }
+        public DbSet<URM> URMs { set; get; }
+        public DbSet<Permission> Permissions { set; get; }
         public DbSet<TestTable> TestTables { set; get; }
-
         #endregion
 
     }

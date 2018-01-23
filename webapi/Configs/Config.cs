@@ -8,5 +8,6 @@ namespace webapi.Configs
     public class Config
     {
         public const string JWTKey = "shengyu";
+        public const string SysUser = "sys";
     }
 }
